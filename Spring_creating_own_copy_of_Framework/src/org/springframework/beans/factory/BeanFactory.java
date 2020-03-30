@@ -2,8 +2,11 @@ package org.springframework.beans.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Resource;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.stereotype.Service;
 
+import javax.annotations.PostConstruct;
+import javax.annotations.PreDestroy;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -11,13 +14,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BeanFactory {
 
     private Map<String, Object> singletons = new HashMap<>();
+    private List<BeanPostProcessor> postProcessors = new ArrayList<>();
 
     public Object getBean(String beanName){
         return singletons.get(beanName);
@@ -89,4 +91,58 @@ public class BeanFactory {
             }
         }
     }
+
+    public void initializeBean(){
+        for (String beanName:singletons.keySet()){
+            Object bean = singletons.get(beanName);
+            for (BeanPostProcessor postProcessor: postProcessors){
+                postProcessor.postProcessBeforeInitialization(bean, beanName);
+            }
+            beforeInitialize(bean);
+            if (bean instanceof InitializingBean){
+                ((InitializingBean) bean).afterPropertiesSet();
+            }
+            for (BeanPostProcessor postProcessor: postProcessors){
+                postProcessor.postProcessAfterInitialization(bean, beanName);
+            }
+        }
+    }
+
+    public Map<String, Object> getSingletons() {
+        return singletons;
+    }
+
+    public void addPostProcessor(BeanPostProcessor postProcessor){
+        postProcessors.add(postProcessor);
+    }
+
+    public void close()  {
+        for (Object bean: singletons.values()){
+            for (Method method: bean.getClass().getMethods()){
+                if (method.isAnnotationPresent(PreDestroy.class)){
+                    try {
+                        method.invoke(bean);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (bean instanceof DisposableBean){
+                ((DisposableBean)bean).destroy();
+            }
+        }
+    }
+
+    public void beforeInitialize(Object bean){
+        for (Method method: bean.getClass().getMethods()){
+            if (method.isAnnotationPresent(PostConstruct.class)){
+                try {
+                    method.invoke(bean);
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

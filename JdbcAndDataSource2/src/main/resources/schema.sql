@@ -1,0 +1,1 @@
+CREATE TABLE Product(name VARCHAR(64), price DOUBLE);

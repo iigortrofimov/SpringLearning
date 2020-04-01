@@ -1,16 +1,13 @@
 package ru.rogi.logger;
 
-import org.springframework.stereotype.Component;
 import ru.rogi.beans.Event;
-
-import javax.annotation.Resource;
 import java.util.Collection;
 
 
-@Component
+//@Component
 public class CombinedEventLogger implements EventLogger{
 
-    @Resource(name = "combinedLoggers")
+    //@Resource(name = "combinedEventLogger")
     private Collection<EventLogger> loggers;
 
     public CombinedEventLogger() {
@@ -20,7 +17,7 @@ public class CombinedEventLogger implements EventLogger{
         this.loggers = loggers;
     }
 
-    @Override
+    //@Override
     public void logEvent(Event event) {
         for (EventLogger logger: loggers){
             logger.logEvent(event);

@@ -1,10 +1,9 @@
 package ru.rogi.logger;
 
-import org.springframework.stereotype.Component;
 import ru.rogi.beans.Event;
 
 
-@Component
+//@Component
 public class ConsoleEventLogger implements EventLogger {
 
     public void logEvent(Event event) {

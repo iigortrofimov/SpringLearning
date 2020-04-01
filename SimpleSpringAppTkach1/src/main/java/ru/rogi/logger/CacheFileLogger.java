@@ -1,19 +1,14 @@
 package ru.rogi.logger;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import ru.rogi.beans.Event;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Component
+//@Component
 public class CacheFileLogger extends FileEventLogger{
 
-    @Value("5")
+    //@Value("5")
     private int cashSize;
 
     private List<Event> cache;
@@ -32,7 +27,7 @@ public class CacheFileLogger extends FileEventLogger{
         this.cache = new ArrayList<>();
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void initCache(){
         this.cache = new ArrayList<>(cashSize);
     }
@@ -54,7 +49,7 @@ public class CacheFileLogger extends FileEventLogger{
         cache.forEach(super::logEvent);
     }
 
-    @PreDestroy
+    //@PreDestroy
     public void destroy(){
         if (!cache.isEmpty()){
             writeEventsFromCache();

@@ -1,18 +1,13 @@
 package ru.rogi.beans;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-@Component
-@Scope("prototype")
+//@Component
+//@Scope("prototype")
 public class Event {
 
     private static final AtomicInteger AUTO_ID = new AtomicInteger(0);
@@ -20,11 +15,11 @@ public class Event {
     private int id;
     private String msg;
 
-    @Autowired
-    @Qualifier("newDate")
+    //@Autowired
+    //@Qualifier("newDate")
     private Date date;
 
-    @Autowired
+    //@Autowired
     private DateFormat dateFormat;
 
     public Event() {
@@ -35,6 +30,11 @@ public class Event {
         this();
         this.date = date;
         this.dateFormat = dateFormat;
+    }
+
+    public static boolean isDay(){
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return hour >= 9 && hour <= 17;
     }
 
     public int getId() {

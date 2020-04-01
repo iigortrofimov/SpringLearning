@@ -1,3 +1,13 @@
-Event{id=1, msg='Some event for 2', date=01.04.2020}
-Event{id=2, msg='Some event for 3', date=01.04.2020}
-Event{id=2, msg='Some event for 3', date=01.04.2020}
+Event{id=0, msg='Event null', date=01.04.2020}
+Event{id=2, msg='Event 3', date=01.04.2020}
+Event{id=3, msg='Event 4', date=01.04.2020}
+Event{id=4, msg='Event null', date=01.04.2020}
+Event{id=2, msg='Event 3', date=01.04.2020}
+Event{id=3, msg='Event 4', date=01.04.2020}
+Event{id=4, msg='Event null', date=01.04.2020}
+Event{id=2, msg='Event 3 Hello there!', date=01.04.2020}
+Event{id=3, msg='Event 4 Hello there!', date=01.04.2020}
+Event{id=4, msg='Event null Hello there!', date=01.04.2020}
+Event{id=2, msg='Event 3, igor', date=01.04.2020}
+Event{id=3, msg='Event 4, igor', date=01.04.2020}
+Event{id=4, msg='Event null, igor', date=01.04.2020}

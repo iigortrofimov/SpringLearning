@@ -1,27 +1,23 @@
 package ru.rogi.beans;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Service;
-import ru.rogi.config.AppConfig;
-import ru.rogi.config.LoggerConfig;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.rogi.event.EventType;
 import ru.rogi.logger.EventLogger;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 
-@Service
+//@Service
 public class App {
 
-    @Autowired
+    //@Autowired
     private Client client;
 
-    @Resource(name = "defaultLogger")
+    //@Resource(name = "defaultLogger")
     private EventLogger defaultLogger;
 
-    @Resource(name = "loggerMap")
+    //@Resource(name = "loggerMap")
     private Map<EventType, EventLogger> loggers;
 
     public App(Client client, EventLogger defaultLogger, Map<EventType, EventLogger> loggers) {
@@ -34,7 +30,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-/*        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         App app = (App) context.getBean("app");
 
         Event event = (Event) context.getBean("event");
@@ -54,10 +50,10 @@ public class App {
 
         System.getProperty("java.class.path");
 
-        context.close(); */
+        context.close();
 
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+ /*       AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 
         context.register(AppConfig.class, LoggerConfig.class);
         context.scan("ru.rogi");
@@ -77,7 +73,7 @@ public class App {
         event = context.getBean(Event.class);
         app.logEvent(null, event, "Some event for 3");
 
-        context.close();
+        context.close();*/
     }
 
     private void logEvent(EventType type, Event event, String msg){
@@ -86,7 +82,7 @@ public class App {
         if (logger == null){
             logger = defaultLogger;
         }
-        event.setMsg(message);
+        event.setMsg(message +  ", " + client.getGreeting());
         logger.logEvent(event);
     }
 }

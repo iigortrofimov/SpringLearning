@@ -54,7 +54,8 @@ public class App {
 
         System.getProperty("java.class.path");
 
-        context.close();*/
+        context.close(); */
+
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 

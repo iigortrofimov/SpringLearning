@@ -13,10 +13,8 @@ public class App {
 
     //@Autowired
     private Client client;
-
     //@Resource(name = "defaultLogger")
     private EventLogger defaultLogger;
-
     //@Resource(name = "loggerMap")
     private Map<EventType, EventLogger> loggers;
 
@@ -51,7 +49,6 @@ public class App {
         System.getProperty("java.class.path");
 
         context.close();
-
 
  /*       AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
 

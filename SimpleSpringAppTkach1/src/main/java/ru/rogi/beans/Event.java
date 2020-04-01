@@ -26,6 +26,12 @@ public class Event {
         this.id = AUTO_ID.getAndIncrement();
     }
 
+    public Event(int id,  Date date, String msg) {
+        this.id = id;
+        this.msg = msg;
+        this.date = date;
+    }
+
     public Event(Date date, DateFormat dateFormat) {
         this();
         this.date = date;

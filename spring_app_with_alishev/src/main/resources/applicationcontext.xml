@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:musicPlayer.properties"/>
+
+    <bean id="musicPlayer"
+          class="ru.rogi.springcource.musicplayer.MusicPlayer">
+<!--
+        <constructor-arg>
+            <list>
+                <ref bean="classicMusic"/>
+                <ref bean="rockMusic"/>
+                <ref bean="modernMusic"/>
+            </list>
+        </constructor-arg>-->
+        <property name="musicList">
+            <list>
+                <ref bean="modernMusic"/>
+                <ref bean="rockMusic"/>
+                <ref bean="classicMusic"/>
+            </list>
+        </property>
+        <property name="brandName" value="${musicPlayer.brandName}"/>
+        <property name="volume" value="${musicPlayer.volume}"/>
+    </bean>
+
+    <bean id="classicMusic" class="ru.rogi.springcource.music.ClassicMusic"/>
+
+    <bean id="modernMusic" class="ru.rogi.springcource.music.ModernMusic"/>
+
+    <bean id="rockMusic" class="ru.rogi.springcource.music.RockMusic"/>
+
+</beans>

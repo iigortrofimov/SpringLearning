@@ -1,20 +1,29 @@
 package ru.rogi.springcource.musicplayer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import ru.rogi.springcource.music.Genre;
 import ru.rogi.springcource.music.Music;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
+
+@Component
 public class MusicPlayer {
-    private List<Music> musicList = new ArrayList<>();
+    private Map<String, Music> musicGenreMap = new HashMap<>();
     private String brandName;
     private int volume;
 
-    public MusicPlayer(List<Music> musicList) {
-        this.musicList = musicList;
-    }
 
-    public MusicPlayer() {
+    @Autowired
+    public MusicPlayer(@Qualifier("rock") Music music1, @Qualifier("classic") Music music2) {
+        this.musicGenreMap.put("Rock", music1);
+        this.musicGenreMap.put("Classic", music2);
+        brandName = "Sony";
+        volume = 99;
     }
 
     public void setBrandName(String brandName) {
@@ -25,25 +34,16 @@ public class MusicPlayer {
         this.volume = volume;
     }
 
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
-    }
 
-    public void playMusic(){
-        for (Music music: musicList){
-            music.play();
+    public void playMusic(Genre musicGenre){
+        System.out.println("Music Player " + brandName + " turned ON, volume is " + volume);
+        int index = new Random().nextInt(2);
+        if (musicGenre.equals(Genre.CLASSICAL)){
+            musicGenreMap.get("Classic").play(index);
+        }else if (musicGenre.equals(Genre.ROCK)){
+            musicGenreMap.get("Rock").play(index);
         }
-    }
 
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public List<Music> getMusicList() {
-        return musicList;
+        System.out.println("Music Player " + brandName + " turned OFF\n");
     }
 }

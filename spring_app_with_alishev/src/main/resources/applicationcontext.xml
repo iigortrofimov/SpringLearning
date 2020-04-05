@@ -10,7 +10,7 @@
     <context:property-placeholder location="classpath:musicPlayer.properties"/>
 
     <bean id="musicPlayer"
-          class="ru.rogi.springcource.musicplayer.MusicPlayer">
+          class="ru.rogi.springcource.musicplayer.MusicPlayer" scope="prototype">
 <!--
         <constructor-arg>
             <list>
@@ -19,10 +19,10 @@
                 <ref bean="modernMusic"/>
             </list>
         </constructor-arg>-->
-        <property name="musicList">
+        <property name="musicGenreList">
             <list>
-                <ref bean="modernMusic"/>
-                <ref bean="rockMusic"/>
+<!--                <ref bean="modernMusic"/>
+                <ref bean="rockMusic"/>-->
                 <ref bean="classicMusic"/>
             </list>
         </property>
@@ -30,7 +30,11 @@
         <property name="volume" value="${musicPlayer.volume}"/>
     </bean>
 
-    <bean id="classicMusic" class="ru.rogi.springcource.music.ClassicMusic"/>
+    <bean id="classicMusic" class="ru.rogi.springcource.music.ClassicMusic"
+          init-method="doMyInit"
+          destroy-method="doMyDestroy"
+          scope="prototype"
+          factory-method="getClassicMusic"/>
 
     <bean id="modernMusic" class="ru.rogi.springcource.music.ModernMusic"/>
 

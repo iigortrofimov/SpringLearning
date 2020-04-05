@@ -1,5 +1,5 @@
 package ru.rogi.springcource.music;
 
 public interface Music {
-    void play();
+    void play(int index);
 }

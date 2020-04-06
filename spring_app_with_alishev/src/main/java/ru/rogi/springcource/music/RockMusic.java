@@ -33,7 +33,12 @@ public class RockMusic implements Music {
     @Override
     public void play(int index) {
         System.out.println("Rock music: ");
-        System.out.println("Playing.." + songList.get(index));
+        songList.get(index).platSong();
         System.out.println();
+    }
+
+    @Override
+    public List<Song> getList() {
+        return songList;
     }
 }

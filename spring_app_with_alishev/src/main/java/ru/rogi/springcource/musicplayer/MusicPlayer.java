@@ -2,28 +2,46 @@ package ru.rogi.springcource.musicplayer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.rogi.springcource.music.Genre;
 import ru.rogi.springcource.music.Music;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 
 @Component
 public class MusicPlayer {
-    private Map<String, Music> musicGenreMap = new HashMap<>();
+    private List<Music> genreList;
+
+    @Value("${musicPlayer.brandName}")
     private String brandName;
+
+    @Value("${musicPlayer.volume}")
     private int volume;
 
-
     @Autowired
-    public MusicPlayer(@Qualifier("rock") Music music1, @Qualifier("classic") Music music2) {
-        this.musicGenreMap.put("Rock", music1);
-        this.musicGenreMap.put("Classic", music2);
-        brandName = "Sony";
-        volume = 99;
+    public MusicPlayer(@Qualifier("musicList")List<Music> musicList) {
+        this.genreList = musicList;
+    }
+
+    public void playMusic(){
+        System.out.println("Music Player " + brandName + " turned ON, volume is " + volume);
+
+        int genreIndex = new Random().nextInt(genreList.size());
+        int songIndex = new Random().nextInt(genreList.get(genreIndex).getList().size());
+        genreList.get(genreIndex).play(songIndex);
+
+        System.out.println("All:" + genreList.toString());
+
+        System.out.println("Music Player " + brandName + " turned OFF\n");
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public int getVolume() {
+        return volume;
     }
 
     public void setBrandName(String brandName) {
@@ -32,18 +50,5 @@ public class MusicPlayer {
 
     public void setVolume(int volume) {
         this.volume = volume;
-    }
-
-
-    public void playMusic(Genre musicGenre){
-        System.out.println("Music Player " + brandName + " turned ON, volume is " + volume);
-        int index = new Random().nextInt(2);
-        if (musicGenre.equals(Genre.CLASSICAL)){
-            musicGenreMap.get("Classic").play(index);
-        }else if (musicGenre.equals(Genre.ROCK)){
-            musicGenreMap.get("Rock").play(index);
-        }
-
-        System.out.println("Music Player " + brandName + " turned OFF\n");
     }
 }

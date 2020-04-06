@@ -6,7 +6,7 @@ import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("classic")
+//@Component("classic")
 public class ClassicMusic implements Music {
 
     private List<Song> songList = new ArrayList<>();
@@ -28,14 +28,14 @@ public class ClassicMusic implements Music {
         System.out.println("destruction classic bean\n");
     }
 
-    @Override
+    //@Override
     public void play(int index) {
         System.out.println("Classic music: ");
         songList.get(index).platSong();
         System.out.println();
     }
 
-    @Override
+    //@Override
     public List<Song> getList() {
         return songList;
     }

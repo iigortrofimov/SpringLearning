@@ -8,7 +8,7 @@ import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("rock")
+//@Component("rock")
 public class RockMusic implements Music {
 
     private List<Song> songList = new ArrayList<>();
@@ -30,14 +30,14 @@ public class RockMusic implements Music {
         System.out.println("destruction rock bean\n");
     }
 
-    @Override
+    //@Override
     public void play(int index) {
         System.out.println("Rock music: ");
         songList.get(index).platSong();
         System.out.println();
     }
 
-    @Override
+    //@Override
     public List<Song> getList() {
         return songList;
     }

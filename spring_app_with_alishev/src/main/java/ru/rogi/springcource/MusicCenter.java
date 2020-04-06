@@ -1,12 +1,15 @@
 package ru.rogi.springcource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.rogi.springcource.musicplayer.MusicPlayer;
 
 @Component
 public class MusicCenter {
     private MusicPlayer player;
+
+    @Value("${musicCenter.brandName}")
     private String brandName;
 
     @Autowired

@@ -17,8 +17,6 @@ public class TestSpring{
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         MusicCenter center = context.getBean("musicCenter", MusicCenter.class);
         center.switchOn();
-        List<Music> genres = context.getBean(List.class);
-        System.out.println(genres.toString());
 
         context.close();
     }

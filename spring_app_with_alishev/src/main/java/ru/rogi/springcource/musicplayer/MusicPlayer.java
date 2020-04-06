@@ -9,7 +9,7 @@ import ru.rogi.springcource.music.Music;
 import java.util.*;
 
 
-@Component
+//@Component
 public class MusicPlayer {
     private List<Music> genreList;
 
@@ -19,7 +19,7 @@ public class MusicPlayer {
     @Value("${musicPlayer.volume}")
     private int volume;
 
-    @Autowired
+    //@Autowired
     public MusicPlayer(@Qualifier("musicList")List<Music> musicList) {
         this.genreList = musicList;
     }
@@ -30,8 +30,6 @@ public class MusicPlayer {
         int genreIndex = new Random().nextInt(genreList.size());
         int songIndex = new Random().nextInt(genreList.get(genreIndex).getList().size());
         genreList.get(genreIndex).play(songIndex);
-
-        System.out.println("All:" + genreList.toString());
 
         System.out.println("Music Player " + brandName + " turned OFF\n");
     }

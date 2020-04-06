@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component("jazz")
+//@Component("jazz")
 public class JazzMusic implements Music {
     private List<Song> songList = new ArrayList<>();
 
@@ -29,14 +29,14 @@ public class JazzMusic implements Music {
         System.out.println("destruction Jazz bean\n");
     }
 
-    @Override
+    //@Override
     public void play(int index) {
         System.out.println("Jazz music: ");
         songList.get(index).platSong();
         System.out.println();
     }
 
-    @Override
+    //@Override
     public List<Song> getList() {
         return songList;
     }

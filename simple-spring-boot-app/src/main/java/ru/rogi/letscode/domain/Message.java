@@ -1,6 +1,5 @@
 package ru.rogi.letscode.domain;
 
-
 import javax.persistence.*;
 
 @Entity

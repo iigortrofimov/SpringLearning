@@ -4,6 +4,7 @@
 <@common.page>
     <div>
         <@login.logout/>
+        <span><a href="/user">User list</a> </span>
     </div>
     <div>
         <form method="post">
@@ -28,6 +29,6 @@
             <strong>${mess.authorName}</strong>
         </div>
     <#else >
-        No massages!
+        No messages!
     </#list>
 </@common.page>

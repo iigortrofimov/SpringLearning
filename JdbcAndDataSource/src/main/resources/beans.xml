@@ -4,6 +4,7 @@
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="application.properties"/>
+
     </bean>
     <bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource" id="dataSource">
         <property name="driverClass" value="${db.driverClass}" />

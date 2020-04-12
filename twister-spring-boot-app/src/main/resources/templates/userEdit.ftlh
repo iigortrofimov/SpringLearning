@@ -1,7 +1,6 @@
 <#import "parts/common.ftlh" as common>
 <@common.page>
     User editor
-
     <form action="/user" method="post" xmlns="http://www.w3.org/1999/html">
         <input type="text" name="username" value="${user.username}">
         <#list roles as role>

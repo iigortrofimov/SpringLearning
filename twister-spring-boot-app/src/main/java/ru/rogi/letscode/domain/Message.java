@@ -1,6 +1,9 @@
 package ru.rogi.letscode.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
@@ -8,7 +11,11 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Fill the description!")
+    @Length(max = 2048, message = "Excess of the count of word limit.")
     private String text;
+
+    @Length(max = 255, message = "This tag is too long, correct it.")
     private String tag;
 
     @ManyToOne(fetch = FetchType.EAGER)

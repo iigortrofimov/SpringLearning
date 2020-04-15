@@ -1,6 +1,7 @@
 package ru.rogi.letscode.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,13 +20,15 @@ public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
     private final MailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Value("${hostname}")
+    private String hostname;
 
-    public UserService(UserRepo userRepo, MailSender mailSender ) {
+    public UserService(UserRepo userRepo, MailSender mailSender, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.mailSender = mailSender;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -58,9 +61,11 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
                     "Hello, %s! \n" +
-                    "Welcome to our new Social NetWork \"TWISTER\"! \n" +
-                            "Please, visit next link: http://localhost:8080/activate/%s"
-            , user.getUsername(), user.getActivationCode());
+                            "Welcome to our new Social NetWork \"TWISTER\"! \n" +
+                            "Please, visit next link: http://%s/activate/%s",
+                    user.getUsername(),
+                    hostname,
+                    user.getActivationCode());
             mailSender.send(user.getEmail(), "Activation code", message);
         }
     }

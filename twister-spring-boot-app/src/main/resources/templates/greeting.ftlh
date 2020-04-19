@@ -2,5 +2,8 @@
 
 <@common.page>
     <h5>Hello, everybody!</h5>
-    <div>I'm trying to create own copy of famous social network known as "Twitter" </div>
+    <div>Welcome to open online shared gallery! </div>
+    <div>
+        <a href="/login" class="btn btn-dark mt-3">Log In</a>
+    </div>
 </@common.page>

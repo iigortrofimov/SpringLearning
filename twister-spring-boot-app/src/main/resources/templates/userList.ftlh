@@ -16,7 +16,9 @@
             <tr>
                 <td>${user.username}</td>
                 <td> <#list user.roles as role> ${role} <#sep>, </#list> </td>
-                <td><a href="/user/${user.id}"> edit</a></td>
+                <td><a  class="btn btn-dark" href="/user/${user.id}"> Edit</a></td>
+                <td><a class="btn btn-dark" href="/user/${user.id}?isDelete=true"> Delete </a></td>
+
             </tr>
         </#list>
         </tbody>

@@ -15,19 +15,17 @@ import ru.rogi.letscode.domain.User;
 import ru.rogi.letscode.repos.MessageRepo;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 public class MainController {
 
-    @Autowired
-    private MessageRepo repo;
-
     @Value("${upload.path}")
     private String uploadPath;
+
+    @Autowired
+    private MessageRepo messageRepo;
 
     @GetMapping("/")
     public String greeting(Model model){
@@ -37,10 +35,10 @@ public class MainController {
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter,
             Model model){
-        Iterable<Message> messages = repo.findAll();
+        Iterable<Message> messages = messageRepo.findAll();
         if (filter != null && !filter.isEmpty()){
-            messages = repo.findByTag(filter);
-        } else messages = repo.findAll();
+            messages = messageRepo.findByTag(filter);
+        } else messages = messageRepo.findAll();
         model.addAttribute("messages", messages);
         model.addAttribute("filter", filter);
         return "main";
@@ -52,30 +50,22 @@ public class MainController {
             @Valid Message message,
             BindingResult bindingResult,
             Model model,
-            @RequestParam("file") MultipartFile file) throws IOException {
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
         message.setAuthor(user);
-        if (bindingResult.hasErrors()){
+
+        if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
 
             model.mergeAttributes(errorsMap);
             model.addAttribute("message", message);
-        }else {
-            if (file != null && !file.getOriginalFilename().isEmpty()) {
-                File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdir();
-                }
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFileName = uuidFile + "." + file.getOriginalFilename();
-
-                file.transferTo(new File(uploadPath + "/" + resultFileName));
-
-                message.setFilename(resultFileName);
-            }
+        } else {
+            ControllerUtils.saveFile(message, file, uploadPath);
             model.addAttribute("message", null);
-            repo.save(message);
+            messageRepo.save(message);
         }
-        Iterable<Message> messages = repo.findAll();
+
+        Iterable<Message> messages = messageRepo.findAll();
         model.addAttribute("messages", messages);
         return "main";
     }
